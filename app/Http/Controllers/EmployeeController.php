@@ -13,7 +13,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Employee::all());
     }
 
     /**
@@ -27,9 +27,10 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEmployeeRequest $request)
+    public function store(\Illuminate\Http\Request $request)
     {
-        //
+        $employee = Employee::create($request->all());
+        return response()->json($employee, 201);
     }
 
     /**
@@ -37,7 +38,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return response()->json($employee);
     }
 
     /**
@@ -51,9 +52,10 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(\Illuminate\Http\Request $request, Employee $employee)
     {
-        //
+        $employee->update($request->all());
+        return response()->json($employee);
     }
 
     /**
@@ -61,6 +63,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        return response()->json(null, 204);
     }
 }

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('no_telp');
             $table->string('email')->unique();
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->unsignedBigInteger('jabatan_id');
+            $table->foreign('jabatan_id')->references('id')->on('roles');
             $table->string('departemen');
             $table->date('tanggal_masuk');
             $table->enum('status_karyawan', ['Inaktif', 'Aktif']);
