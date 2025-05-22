@@ -22,7 +22,7 @@ class EmployeeSeeder extends Seeder
                 'alamat' => 'Denpasar',
                 'no_telp' => '081234567890',
                 'email' => 'sastra@example.com',
-                'role_id' => 5, // Magang
+                'jabatan_id' => 5, // Magang
                 'departemen' => 'IT',
                 'tanggal_masuk' => '2024-05-01',
                 'status_karyawan' => 'Aktif',
@@ -38,7 +38,7 @@ class EmployeeSeeder extends Seeder
                 'alamat' => 'Surabaya',
                 'no_telp' => '081234567891',
                 'email' => 'kennardyl@example.com',
-                'role_id' => 5, // Magang
+                'jabatan_id' => 5, // Magang
                 'departemen' => 'IT',
                 'tanggal_masuk' => '2024-05-01',
                 'status_karyawan' => 'Aktif',
@@ -54,7 +54,7 @@ class EmployeeSeeder extends Seeder
                 'alamat' => 'Bandung',
                 'no_telp' => '081234567892',
                 'email' => 'dewiayu@example.com',
-                'role_id' => 3, // Staff
+                'jabatan_id' => 3, // Staff
                 'departemen' => 'HRD',
                 'tanggal_masuk' => '2020-01-10',
                 'status_karyawan' => 'Aktif',
@@ -70,7 +70,7 @@ class EmployeeSeeder extends Seeder
                 'alamat' => 'Jakarta',
                 'no_telp' => '081234567893',
                 'email' => 'budi@example.com',
-                'role_id' => 2, // Supervisor
+                'jabatan_id' => 2, // Supervisor
                 'departemen' => 'Keuangan',
                 'tanggal_masuk' => '2018-06-15',
                 'status_karyawan' => 'Aktif',
@@ -86,7 +86,7 @@ class EmployeeSeeder extends Seeder
                 'alamat' => 'Yogyakarta',
                 'no_telp' => '081234567894',
                 'email' => 'siti@example.com',
-                'role_id' => 1, // Manager
+                'jabatan_id' => 1, // Manager
                 'departemen' => 'Operasional',
                 'tanggal_masuk' => '2015-03-01',
                 'status_karyawan' => 'Aktif',
