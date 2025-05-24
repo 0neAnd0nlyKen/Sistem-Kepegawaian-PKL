@@ -101,4 +101,10 @@ class AttendenceController extends Controller
         Attendence::buatBulanBaru($bulan, $tahun);
         return response()->json(['message' => 'Bulan baru telah dibuat untuk attendence'], 201);
     }
+
+    public function kehadiranBulananPegawai($employee_id, $bulan, $tahun)
+    {
+        $attendences = Attendence::KehadiranBulananPegawai($employee_id, $bulan, $tahun);
+        return response()->json($attendences);
+    }
 }

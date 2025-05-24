@@ -50,4 +50,11 @@ class Attendence extends Model
             }
         }
     }
+    public function scopeKehadiranBulananPegawai($query, Employee $employee, $bulan, $tahun)
+    {
+        return $query->where('employee_id', $employee->id)
+                     ->whereYear('tanggal', $tahun)
+                     ->whereMonth('tanggal', $bulan)
+                     ->get();
+    }
 }
