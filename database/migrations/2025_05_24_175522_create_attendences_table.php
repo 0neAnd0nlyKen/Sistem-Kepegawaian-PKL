@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attendences', function (Blueprint $table) {
-            $table->id();
+            //pegawai id dan tanggal adalah key unik gabungan
+            $table->foreignId('pegawai_id')->constrained('employees')->onDelete('cascade');
+            $table->date('tanggal');
+            $table->time('check_in')->nullable();
+            $table->time('check_out')->nullable();
+            $table->enum('status', ['pending', 'hadir', 'izin', 'sakit', 'cuti', 'alpha'])->default('pending');
             $table->timestamps();
+
+            $table->primary(['pegawai_id', 'tanggal']);
         });
     }
 
