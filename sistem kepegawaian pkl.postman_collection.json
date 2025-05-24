@@ -9,7 +9,22 @@
 	"item": [
 		{
 			"name": "csrf",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -94,7 +109,7 @@
 			"response": []
 		},
 		{
-			"name": "get pegawai",
+			"name": "list pegawai",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -125,6 +140,276 @@
 						"employees"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "pegawai 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/employees/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list jabatan",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|bqWPRpKSaRubaihhQ9gA7fXsVo7yslIIxCcpKqsx3b2202db",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-XSRF-TOKEN",
+						"value": "eyJpdiI6InVOZmQxSEZFdEgvN0FhaHZpT2hEY2c9PSIsInZhbHVlIjoiTm5XODVZclBpU2M3MGxtdE8rK09Mamc5Y0RWRzBIZEFDU2V0VmxLVGhVeWhVNnBkd21GQ1dVL0xBSjZ3cmRXTUxlU0VUZDV5OFZVVEFtV0FVcm44KzdZSmc4MWN4VmRuMTc4M1JBd01vYkxjVDc3Mmg5M2pPQWFKQnB2VHo3S3YiLCJtYWMiOiIxOWQ5NjNjYTI0MDQ0MGY0MjBhNWVlMzAwM2FhN2JhMDMzZmExZWY4MmQ2NWM0YjA4YTkyNzI3ZjM5MGU1Y2MwIiwidGFnIjoiIn0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/roles",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list jabatan pangkat atas untuk pegawai dengan id 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/employees/1/naikPangkat",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"1",
+						"naikPangkat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "naik pangkat pegawai 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/employees/1/naikPangkat/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"1",
+						"naikPangkat",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setuju cuti",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/leaveApplications/1/setuju/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"leaveApplications",
+						"1",
+						"setuju",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tolak cuti",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|bqWPRpKSaRubaihhQ9gA7fXsVo7yslIIxCcpKqsx3b2202db",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "X-XSRF-TOKEN",
+						"value": "eyJpdiI6InVOZmQxSEZFdEgvN0FhaHZpT2hEY2c9PSIsInZhbHVlIjoiTm5XODVZclBpU2M3MGxtdE8rK09Mamc5Y0RWRzBIZEFDU2V0VmxLVGhVeWhVNnBkd21GQ1dVL0xBSjZ3cmRXTUxlU0VUZDV5OFZVVEFtV0FVcm44KzdZSmc4MWN4VmRuMTc4M1JBd01vYkxjVDc3Mmg5M2pPQWFKQnB2VHo3S3YiLCJtYWMiOiIxOWQ5NjNjYTI0MDQ0MGY0MjBhNWVlMzAwM2FhN2JhMDMzZmExZWY4MmQ2NWM0YjA4YTkyNzI3ZjM5MGU1Y2MwIiwidGFnIjoiIn0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/leaveApplications/1/tolak/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"leaveApplications",
+						"1",
+						"tolak",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setuju cuti",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/leaveApplications/2/setuju/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"leaveApplications",
+						"2",
+						"setuju",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tolak cuti",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/leaveApplications/2/tolak/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"leaveApplications",
+						"2",
+						"tolak",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update kehadiran dengan cuti",
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}
