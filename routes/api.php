@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('employees', 'App\\Http\\Controllers\\EmployeeController');
+        Route::apiResource('roles', 'App\\Http\\Controllers\\RoleController');
     });
 });
 
