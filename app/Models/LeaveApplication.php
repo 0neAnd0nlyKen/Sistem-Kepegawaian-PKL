@@ -36,4 +36,17 @@ class LeaveApplication extends Model
         return $this->belongsTo(\App\Models\Employee::class, 'pemberi_persetujuan_id');
     }
 
+    public function setuju(\App\Models\Employee $pemberi_setuju)
+    {
+        $this->status = 'approved';
+        $this->approved_at = now();
+        $this->pemberi_persetujuan_id = $pemberi_setuju->id;
+        $this->save();
+    }
+    public function tolak()
+    {
+        $this->status = 'rejected';
+        $this->approved_at = now();
+        $this->save();
+    }
 }

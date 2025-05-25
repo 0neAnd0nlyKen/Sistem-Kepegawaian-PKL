@@ -20,7 +20,7 @@ class LeaveApplicationController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -64,5 +64,17 @@ class LeaveApplicationController extends Controller
     {
         $leaveApplication->delete();
         return response()->json(null, 204);
+    }
+
+    public function setuju(LeaveApplication $leaveApplication, \App\Models\Employee $pemberi_setuju)
+    {
+        $leaveApplication->setuju($pemberi_setuju);
+        return response()->json($leaveApplication);
+    }
+
+    public function tolak(LeaveApplication $leaveApplication, \App\Models\Employee $pemberi_setuju)
+    {
+        $leaveApplication->tolak($pemberi_setuju);
+        return response()->json($leaveApplication);
     }
 }
