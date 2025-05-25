@@ -13,6 +13,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
         Route::get('attendences/{employee}/{bulan}/{tahun}', 'App\\Http\\Controllers\\AttendenceController@kehadiranBulananPegawai');
         Route::post('attendences/bulanBaru', 'App\\Http\\Controllers\\AttendenceController@buatBulanBaru');
         Route::patch('attendences/{employee}/hadir', 'App\\Http\\Controllers\\AttendenceController@hadir');
+        Route::put('attendences/{leaveApplication}', 'App\\Http\\Controllers\\AttendenceController@setCuti');
 
         Route::apiResource('employees', 'App\\Http\\Controllers\\EmployeeController');
         Route::apiResource('roles', 'App\\Http\\Controllers\\RoleController');

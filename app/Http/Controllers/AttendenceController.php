@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Attendence;
 use App\Http\Requests\StoreAttendenceRequest;
 use App\Http\Requests\UpdateAttendenceRequest;
+use App\Models\LeaveApplication;
+use Illuminate\Support\Facades\Log;
+
+use function Illuminate\Log\log;
+
 class AttendenceController extends Controller
 {
     /**
@@ -34,13 +39,10 @@ class AttendenceController extends Controller
 
     /**
      * Display the specified resource.
-     * Custom: Find by employee_id and tanggal (composite key)
      */
-    public function show($employee_id, $tanggal)
+    public function show($pegawai_id, $tanggal)
     {
-        $attendence = Attendence::where('employee_id', $employee_id)
-            ->where('tanggal', $tanggal)
-            ->firstOrFail();
+        $attendence = Attendence::findByEmployeeAndDate($pegawai_id, $tanggal);
         return response()->json($attendence);
     }
 
@@ -54,7 +56,6 @@ class AttendenceController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * Custom: Find by employee_id and tanggal (composite key)
      */
     public function update(UpdateAttendenceRequest $request, $employee_id, $tanggal)
     {
@@ -67,30 +68,28 @@ class AttendenceController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * Custom: Find by employee_id and tanggal (composite key)
      */
-    public function destroy($employee_id, $tanggal)
+    public function destroy(Attendence $attendence)
     {
-        $attendence = Attendence::where('employee_id', $employee_id)
-            ->where('tanggal', $tanggal)
-            ->firstOrFail();
-        $attendence->delete();
-        return response()->json(null, 204);
+        //
     }
-    public function setCuti(\App\Models\LeaveApplication $leaveApplication)
+    public function setCuti(LeaveApplication $leaveApplication)
     {
-        $start = \Carbon\Carbon::parse($leaveApplication->tgl_mulai);
-        $end = \Carbon\Carbon::parse($leaveApplication->tgl_selesai);
-        for ($date = $start; $date->lte($end); $date->addDay()) {
-            if ($date->isWeekday()) {
-                Attendence::findByEmployeeAndDate($leaveApplication->employee, $date->format('Y-m-d'))->first()
-                ->update([
-                    'status' => 'Cuti',
-                    'jam_masuk' => null,
-                    'jam_keluar' => null,
-                ]);
-            }
+        Log::info('Setting cuti for leave application: ' . $leaveApplication . ' for employee: ' . $leaveApplication->employee);
+
+        if (!$leaveApplication->employee) {
+            return response()->json(['message' => 'Pegawai tidak ditemukan'], 404);
         }
+        if (!$leaveApplication->tgl_mulai || !$leaveApplication->tgl_selesai) {
+            return response()->json(['message' => 'Tanggal mulai dan selesai cuti harus diisi'], 400);
+        }
+        if ($leaveApplication->status !== 'approved') {
+            return response()->json(['message' => 'Cuti harus disetujui sebelum diatur'], 400);
+        }
+
+        Log::info('Setting cuti for employee: ' . $leaveApplication->employee->name);
+        Attendence::setCuti($leaveApplication);
+        Log::info('Cuti telah diatur untuk pegawai: ' . $leaveApplication->employee->name);
         return response()->json(['message' => 'Cuti telah diatur untuk pegawai ' . $leaveApplication->employee->name], 200);
     }
 

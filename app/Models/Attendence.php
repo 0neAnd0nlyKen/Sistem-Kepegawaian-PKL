@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Attendence extends Model
 {
@@ -56,5 +57,40 @@ class Attendence extends Model
                      ->whereYear('tanggal', $tahun)
                      ->whereMonth('tanggal', $bulan)
                      ->get();
+    }
+
+    public static function setCuti(LeaveApplication $leaveApplication)
+    {
+        Log::info('Set cuti called', [
+            'employee_id' => $leaveApplication->employee->id ?? null,
+            'leaveApplication_id' => $leaveApplication->id ?? null,
+            'tgl_mulai' => $leaveApplication->tgl_mulai,
+            'tgl_selesai' => $leaveApplication->tgl_selesai,
+        ]);
+        $start = \Carbon\Carbon::parse($leaveApplication->tgl_mulai);
+        $end = \Carbon\Carbon::parse($leaveApplication->tgl_selesai);
+        for ($date = $start; $date->lte($end); $date->addDay()) {
+            if ($date->isWeekday()) {
+                Log::info('Setting cuti for date', [
+                    'date' => $date->format('Y-m-d'),
+                    'employee_id' => $leaveApplication->employee->id,
+                ]);
+                $updated = self::where('pegawai_id', $leaveApplication->employee->id)
+                    ->whereDate('tanggal', $date->format('Y-m-d'))
+                    ->update([
+                        'status' => 'Cuti',
+                        'check_in' => null,
+                        'check_out' => null,
+                    ]);
+                Log::info('Set cuti for date', [
+                    'date' => $date->format('Y-m-d'),
+                    'updated' => $updated,
+                ]);
+            }
+        }
+        Log::info('Set cuti completed', [
+            'employee_id' => $leaveApplication->employee->id ?? null,
+            'leaveApplication_id' => $leaveApplication->id ?? null,
+        ]);
     }
 }
