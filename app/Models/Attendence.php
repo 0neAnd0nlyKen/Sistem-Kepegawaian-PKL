@@ -10,7 +10,7 @@ class Attendence extends Model
     /** @use HasFactory<\Database\Factories\AttendenceFactory> */
     use HasFactory;
     protected $fillable = [
-        'employee_id',
+        'pegawai_id',
         'tanggal',
         'jam_masuk',
         'jam_keluar',
@@ -23,12 +23,12 @@ class Attendence extends Model
     ];
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->belongsTo(Employee::class, 'pegawai_id');
     }
     //metode mencari dengan input model Employee dan input tanggal
     public function scopeFindByEmployeeAndDate($query, Employee $employee, $date)
     {
-        return $query->where('employee_id', $employee->id)
+        return $query->where('pegawai_id', $employee->id)
                      ->whereDate('tanggal', $date);
     }
     // buat bulan baru berdasarkan Route::post('attendences/bulan', 'App\\Http\\Controllers\\AttendenceController@buatBulanBaru');

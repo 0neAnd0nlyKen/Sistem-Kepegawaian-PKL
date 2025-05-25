@@ -12,7 +12,7 @@ class LeaveApplicationController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(LeaveApplication::all());
     }
 
     /**
@@ -28,7 +28,8 @@ class LeaveApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $leaveApplication = LeaveApplication::create($request->validated());
+        return response()->json($leaveApplication, 201);
     }
 
     /**
@@ -36,7 +37,7 @@ class LeaveApplicationController extends Controller
      */
     public function show(LeaveApplication $leaveApplication)
     {
-        //
+        return response()->json($leaveApplication);
     }
 
     /**
@@ -52,7 +53,8 @@ class LeaveApplicationController extends Controller
      */
     public function update(Request $request, LeaveApplication $leaveApplication)
     {
-        //
+        $leaveApplication->update($request->validated());
+        return response()->json($leaveApplication);
     }
 
     /**
@@ -60,6 +62,7 @@ class LeaveApplicationController extends Controller
      */
     public function destroy(LeaveApplication $leaveApplication)
     {
-        //
+        $leaveApplication->delete();
+        return response()->json(null, 204);
     }
 }
