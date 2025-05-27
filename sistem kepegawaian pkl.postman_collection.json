@@ -144,7 +144,96 @@
 			"response": []
 		},
 		{
-			"name": "pegawai 1",
+			"name": "tambahkan pegawai",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nip",
+							"value": "230006",
+							"type": "text"
+						},
+						{
+							"key": "nama_lengkap",
+							"value": "John Doe",
+							"type": "text"
+						},
+						{
+							"key": "jenis_kelamin",
+							"value": "Laki-laki",
+							"type": "text"
+						},
+						{
+							"key": "tanggal_lahir",
+							"value": "2001-01-01",
+							"type": "text"
+						},
+						{
+							"key": "alamat",
+							"value": "Bali",
+							"type": "text"
+						},
+						{
+							"key": "no_telp",
+							"value": "081234567892",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "johndoe@example.com",
+							"type": "text"
+						},
+						{
+							"key": "jabatan_id",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "departemen",
+							"value": "IT",
+							"type": "text"
+						},
+						{
+							"key": "tanggal_masuk",
+							"value": "2020-01-10",
+							"type": "text"
+						},
+						{
+							"key": "status_karyawan",
+							"value": "Aktif",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/employees",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pegawai baru",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -159,7 +248,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/api/v1/employees/1",
+					"raw": "{{base_url}}/api/v1/employees/6",
 					"host": [
 						"{{base_url}}"
 					],
@@ -167,7 +256,37 @@
 						"api",
 						"v1",
 						"employees",
-						"1"
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hapuskan pegawai",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/employees/6",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"6"
 					]
 				}
 			},
@@ -406,10 +525,32 @@
 			"response": []
 		},
 		{
-			"name": "update kehadiran dengan cuti",
+			"name": "update khadiran dengan cuti",
 			"request": {
-				"method": "GET",
-				"header": []
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/attendences/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"attendences",
+						"2"
+					]
+				}
 			},
 			"response": []
 		}
