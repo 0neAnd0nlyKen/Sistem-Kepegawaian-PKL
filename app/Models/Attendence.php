@@ -8,20 +8,24 @@ use Illuminate\Support\Facades\Log;
 
 class Attendence extends Model
 {
+    
     /** @use HasFactory<\Database\Factories\AttendenceFactory> */
     use HasFactory;
     protected $fillable = [
         'pegawai_id',
         'tanggal',
-        'jam_masuk',
-        'jam_keluar',
+        'check_in',
+        'check_out',
         'status',
     ];
     protected $casts = [
         'tanggal' => 'date',
-        'jam_masuk' => 'datetime',
-        'jam_keluar' => 'datetime',
+        'check_in' => 'datetime',
+        'check_out' => 'datetime',
     ];
+    public $incrementing = false;
+    protected $primaryKey = null;
+    protected $keyType = 'string';
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'pegawai_id');
@@ -45,7 +49,7 @@ class Attendence extends Model
                 if ($date->isWeekday()) {
                     self::updateOrCreate(
                         ['employee_id' => $employee->id, 'tanggal' => $date],
-                        ['status' => 'Hadir', 'jam_masuk' => null, 'jam_keluar' => null]
+                        ['status' => 'Hadir', 'check_in' => null, 'check_out' => null]
                     );
                 }
             }
@@ -91,6 +95,69 @@ class Attendence extends Model
         Log::info('Set cuti completed', [
             'employee_id' => $leaveApplication->employee->id ?? null,
             'leaveApplication_id' => $leaveApplication->id ?? null,
+        ]);
+    }
+
+    //static function untuk hadir input pegawai_id dan timestamp check_in
+    public static function hadir($pegawai_id, $check_in)
+    {
+        Log::info('Hadir called', [
+            'pegawai_id' => $pegawai_id,
+            'check_in' => $check_in,
+        ]);
+        //insert new row today and pegawai_id
+        $attendence = self::firstOrCreate(
+            ['pegawai_id' => $pegawai_id, 'tanggal' => now()->format('Y-m-d')],
+            ['check_in' => null, 'check_out' => null, 'status' => 'pending']
+        );
+        //if already exists, update check_in and status to hadir
+        if ($attendence->check_in) {
+            Log::warning('Attendence already exists for today', ['pegawai_id' => $pegawai_id]);
+            throw new \Exception('Attendence already exists for today');
+        }
+        //if not exists, set check_in and status to hadir
+        Log::info('Creating new attendence for today', [
+            'pegawai_id' => $pegawai_id,
+            'tanggal' => now()->format('Y-m-d'),
+        ]);
+        // update langsung via query builder agar tidak error primary key
+        self::where('pegawai_id', $pegawai_id)
+            ->whereDate('tanggal', now()->format('Y-m-d'))
+            ->update([
+                'check_in' => $check_in,
+                'status' => 'hadir',
+            ]);
+        Log::info('Hadir completed', [
+            'pegawai_id' => $pegawai_id,
+            'check_in' => $check_in,
+        ]);
+        // return attendence terbaru
+        return self::where('pegawai_id', $pegawai_id)
+            ->whereDate('tanggal', now()->format('Y-m-d'))
+            ->first();
+    }
+    public static function keluar($pegawai_id, $check_out)
+    {
+        Log::info('Keluar called', [
+            'pegawai_id' => $pegawai_id,
+            'check_out' => $check_out,
+        ]);
+        $attendence = self::where('pegawai_id', $pegawai_id)
+            ->whereDate('tanggal', now()->format('Y-m-d'))
+            ->first();
+
+        if (!$attendence) {
+            Log::error('Attendence not found for employee', ['pegawai_id' => $pegawai_id]);
+            throw new \Exception('Attendence not found');
+        }
+
+        $attendence->check_out = $check_out;
+        $attendence->status = 'Selesai';
+        $attendence->save();
+
+        Log::info('Keluar completed', [
+            'pegawai_id' => $pegawai_id,
+            'check_out' => $check_out,
         ]);
     }
 }

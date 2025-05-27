@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendence;
 use App\Http\Requests\StoreAttendenceRequest;
 use App\Http\Requests\UpdateAttendenceRequest;
+use App\Models\Employee;
 use App\Models\LeaveApplication;
 use Illuminate\Support\Facades\Log;
 
@@ -87,10 +88,10 @@ class AttendenceController extends Controller
             return response()->json(['message' => 'Cuti harus disetujui sebelum diatur'], 400);
         }
 
-        Log::info('Setting cuti for employee: ' . $leaveApplication->employee->name);
+        Log::info('Setting cuti for employee: ' . $leaveApplication->employee["nama_lengkap"]);
         Attendence::setCuti($leaveApplication);
-        Log::info('Cuti telah diatur untuk pegawai: ' . $leaveApplication->employee->name);
-        return response()->json(['message' => 'Cuti telah diatur untuk pegawai ' . $leaveApplication->employee->name], 200);
+        Log::info('Cuti telah diatur untuk pegawai: ' . $leaveApplication->employee["nama_lengkap"]);
+        return response()->json(['message' => 'Cuti telah diatur untuk pegawai ' . $leaveApplication->employee["nama_lengkap"]], 200);
     }
 
     public function buatBulanBaru(\Illuminate\Http\Request $request)
@@ -105,5 +106,18 @@ class AttendenceController extends Controller
     {
         $attendences = Attendence::KehadiranBulananPegawai($employee_id, $bulan, $tahun);
         return response()->json($attendences);
+    }
+
+    public function hadir($pegawai_id){
+        // gunakan     public static function hadir($pegawai_id, $jam_masuk)
+        $jam_masuk = now();
+        Log::info('Hadir called for employee: ' . $pegawai_id . ' at ' . $jam_masuk);
+        $attendence = Attendence::hadir($pegawai_id, $jam_masuk);
+        if (!$attendence) {
+            return response()->json(['message' => 'Attendence not found for employee'], 404);
+        }
+        Log::info('Hadir success for employee: ' . $pegawai_id);
+        return response()->json($attendence, 200);
+        
     }
 }

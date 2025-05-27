@@ -14,7 +14,8 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
         Route::post('attendences/bulanBaru', 'App\\Http\\Controllers\\AttendenceController@buatBulanBaru');
         Route::patch('attendences/{employee}/hadir', 'App\\Http\\Controllers\\AttendenceController@hadir');
         Route::put('attendences/{leaveApplication}', 'App\\Http\\Controllers\\AttendenceController@setCuti');
-
+        Route::patch('attendences/{pegawai_id}/hadir', 'App\\Http\\Controllers\\AttendenceController@update');
+        
         Route::apiResource('employees', 'App\\Http\\Controllers\\EmployeeController');
         Route::apiResource('roles', 'App\\Http\\Controllers\\RoleController');
         Route::apiResource('leaveApplications', 'App\\Http\\Controllers\\LeaveApplicationController');

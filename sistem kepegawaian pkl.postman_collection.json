@@ -553,6 +553,37 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "7|CPhoopDkseM8o0Bnte4BnAAc47dw1j3PyUbIbWJI9dbcdf06",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/attendences/1/hadir",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"attendences",
+						"1",
+						"hadir"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
